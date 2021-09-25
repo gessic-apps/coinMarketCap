@@ -1,2 +1,2 @@
-# twelveData
-Twelve Data feed
+# Coin market cap
+coinmarketcap feed
