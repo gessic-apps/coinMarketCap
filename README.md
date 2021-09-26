@@ -1,2 +1,2 @@
-# Coin market cap
+# Coin market cap & weatherapi
 coinmarketcap feed
