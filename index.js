@@ -43,18 +43,6 @@ app.get('/getPrice', async (req, res) => {
     }
     console.log(algoResponse)
 
-    // let btcResponse = await btc.json();
-
-    // let eth = await fetch(`https://api.twelvedata.com/price?symbol=eth/usd&apikey=${process.env.API_KEY}`)
-    // let ethResponse = await eth.json();
-
-    // let ada = await fetch(`https://api.twelvedata.com/price?symbol=ada/usd&apikey=${process.env.API_KEY}`)
-    // let adaResponse = await ada.json();
-
-    // let bnb = await fetch(`https://api.twelvedata.com/price?symbol=bnb/usd&apikey=${process.env.API_KEY}`)
-    // let bnbResponse = await bnb.json();
-
-    // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
     res.send([
@@ -66,6 +54,31 @@ app.get('/getPrice', async (req, res) => {
     ]);
   })
 
+  app.get('/getWeather', async (req, res) => {
+    console.log(req.query);
+
+    let toronto = await fetch(`https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY}&q=toronto&aqi=no`);
+    let torontoResponse = await toronto.json();
+    
+    let london = await fetch(`https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY}&q=London&aqi=no`);
+    let londonResponse = await london.json();
+
+    let helsinki = await fetch(`https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY}&q=helsinki&aqi=no`);
+    let helsinkiResponse = await helsinki.json();
+   
+    let cairo = await fetch(`https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY}&q=cairo&aqi=no`);
+    let cairoResponse = await cairo.json();
+
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  
+    res.send([
+      { name: 'toronto', temp: parseFloat(torontoResponse.current.temp_c)},
+      { name: 'london', temp: parseFloat(londonResponse.current.temp_c)},
+      { name: 'helsinki', temp: parseFloat(helsinkiResponse.current.temp_c)},
+      { name: 'cairo', temp: parseFloat(cairoResponse.current.temp_c)},
+      ])
+  })
+  
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
   });
